@@ -22,16 +22,16 @@ public class Search {
         name = scanner.nextLine();
         System.out.println("Hello " + name + "!");
 
-        while (true) {
-            System.out.println("Search for your desired amenity below. Type 'Exit' to leave the app.");
-            entry = scanner.nextLine();
+        System.out.println("Search for your desired amenity below. Type 'Exit' to leave the app.");
+        entry = scanner.nextLine();
 
-            if (entry.equals("Exit")) {
-                System.out.println("Thank you " + name + ". Come again!");
-                break;
-            }
-            System.out.println("Please find your " + entry + " here:");
+        while (!(entry.equals("Exit"))) {
+            System.out.println("Please find the " + entry + " here:");
+            System.out.println("Search for your desired amenity below. Type 'Exit' to exit the app.");
+            entry = scanner.nextLine();
         }
+
+        System.out.println("Thank you " + name + ". Come again!");
     }
 
     public static void main(String[] args) {
