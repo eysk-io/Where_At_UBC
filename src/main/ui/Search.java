@@ -2,37 +2,57 @@ package ui;
 
 import model.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Search {
     private static Amenity amenity = new Amenity();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         User user = createUser();
+        List<String> lines = Files.readAllLines(Paths.get("./data/userInfo.txt"));
+        PrintWriter writer = new PrintWriter("./data/userInfo.txt","UTF-8");
 
         // START OF fakeBuilding/Location/Amenity
         ArrayList<Location> listOfFakeLocations = setFakeLocations();
-        Building fakeBuilding1 = new Building();
-        fakeBuilding1.setBuildingName("fake b1");
-        fakeBuilding1.addLocation(listOfFakeLocations.get(0));
-        fakeBuilding1.addLocation(listOfFakeLocations.get(1));
-        fakeBuilding1.addLocation(listOfFakeLocations.get(2));
-
-        Building fakeBuilding2 = new Building();
-        fakeBuilding2.setBuildingName("fake b2");
-        fakeBuilding2.addLocation(listOfFakeLocations.get(0));
-        fakeBuilding2.addLocation(listOfFakeLocations.get(1));
-        fakeBuilding2.addLocation(listOfFakeLocations.get(2));
+        String fakeName = "fake b1";
+        Building fakeBuilding1 = createBuilding(listOfFakeLocations, fakeName);
+        fakeName = "fake b2";
+        Building fakeBuilding2 = createBuilding(listOfFakeLocations, fakeName);
 
         UBC ubc = new UBC();
         ubc.addBuilding(fakeBuilding1);
         ubc.addBuilding(fakeBuilding2);
-        // END OF fakeBuilding/Location/Amenity
 
-        ArrayList<Building> validBuildings = createValidBuildings(user.getUserName(), ubc, amenity);
+        ArrayList<Building> validBuildings = createValidBuildings(user.getName(), ubc, amenity);
         Building building = createBuildingSearch(validBuildings, ubc);
+        lines.add(building.getBuildingName());
+
         finishAmenitySearch(building, amenity);
+        outPutToFile(lines, writer);
+    }
+
+    private static void outPutToFile(List<String> lines, PrintWriter writer) {
+        lines.add(amenity.getAmenityName());
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
+    }
+
+    // EFFECTS: Create a fake building for Search class
+    private static Building createBuilding(ArrayList<Location> listOfFakeLocations, String fakeName) {
+        Building fakeBuilding = new Building();
+        fakeBuilding.setBuildingName(fakeName);
+        fakeBuilding.addLocation(listOfFakeLocations.get(0));
+        fakeBuilding.addLocation(listOfFakeLocations.get(1));
+        fakeBuilding.addLocation(listOfFakeLocations.get(2));
+        return fakeBuilding;
     }
 
     private static User createUser() {
@@ -77,7 +97,7 @@ public class Search {
 
     private static void finishAmenitySearch(Building building, Amenity amenity) {
         // if valid building given:
-        if (building.checkForAmenityInBuilding(amenity.getAmenityName())) {
+        if (building.checkForAmenityInClass(amenity.getAmenityName())) {
             System.out.println("You can find the " + amenity.getAmenityName()
                     + " at the following locations within " + building.getBuildingName() + ":");
             ArrayList<Location> resultList = building.returnLocationsFromBuilding(amenity.getAmenityName());
@@ -89,7 +109,7 @@ public class Search {
 
     private static ArrayList<Building> tryAgainUntilAmenityFound(String name, UBC ubc, Amenity amenity, Scanner as) {
         ArrayList<Building> validBuildings = new ArrayList<Building>();
-        while (!ubc.checkForAmenityAtUBC(name)) {
+        while (!ubc.checkForAmenityInClass(name)) {
             System.out.println("I'm sorry, that amenity does not exist @UBC. Anything else?");
             name = as.nextLine();
             amenity.setAmenityName(name);

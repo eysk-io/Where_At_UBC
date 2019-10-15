@@ -1,8 +1,10 @@
 package model;
 
+import interfaces.Places;
+
 import java.util.ArrayList;
 
-public class UBC {
+public class UBC implements Places {
     private ArrayList<Building> buildings;
 
     // EFFECTS: constructs UBC, setting an empty list of buildings on campus
@@ -22,9 +24,9 @@ public class UBC {
         return true;
     }
 
-
     // EFFECTS: return true if the amenity exists at UBC
-    public boolean checkForAmenityAtUBC(String amenity) {
+    @Override
+    public boolean checkForAmenityInClass(String amenity) {
         boolean result;
         if (checkForAmenityInListOfBuildings(amenity)) {
             result = true;
@@ -38,7 +40,7 @@ public class UBC {
     public boolean checkForAmenityInListOfBuildings(String amenity) {
         boolean result = false;
         for (int i = 0; i < buildings.size(); i++) {
-            if (buildings.get(i).checkForAmenityInBuilding(amenity)) {
+            if (buildings.get(i).checkForAmenityInClass(amenity)) {
                 result = true;
             }
         }

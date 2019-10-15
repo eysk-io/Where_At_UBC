@@ -48,21 +48,21 @@ public class LocationTest {
     public void testCheckForAmenityInLocationEmpty() {
         assertEquals(testLocation.getAmenities().size(), 0);
         String testAmenityName = "test amenity";
-        assertFalse(testLocation.checkForAmenityInLocation(testAmenityName));
+        assertFalse(testLocation.checkForAmenityInClass(testAmenityName));
     }
 
     @Test
     public void testCheckForAmenityInLocationNonEmptyNotFound() {
         assertEquals(fakeLocation.getAmenities().size(), 3);
         String testAmenityName = "test amenity";
-        assertFalse(fakeLocation.checkForAmenityInLocation(testAmenityName));
+        assertFalse(fakeLocation.checkForAmenityInClass(testAmenityName));
     }
 
     @Test
     public void testCheckForAmenityInLocationNonEmptyFound() {
         assertEquals(fakeLocation.getAmenities().size(), 3);
         String testAmenityName = "lounge";
-        assertTrue(fakeLocation.checkForAmenityInLocation(testAmenityName));
+        assertTrue(fakeLocation.checkForAmenityInClass(testAmenityName));
     }
 
     // checkForAmenityInListOfAmenities(String amenity)

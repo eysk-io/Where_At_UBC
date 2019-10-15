@@ -88,7 +88,7 @@ public class UbcTest {
     public void testCheckForAmenityAtUbcEmpty() {
         String testAmenityName = "test amenity";
         assertEquals(testUBC.getBuildings().size(), 0);
-        assertFalse(testUBC.checkForAmenityAtUBC(testAmenityName));
+        assertFalse(testUBC.checkForAmenityInClass(testAmenityName));
     }
 
     // amenity does NOT exist
@@ -96,7 +96,7 @@ public class UbcTest {
     public void testCheckForAmenityAtUbcDoesNotExist() {
         String testAmenityName = "test amenity";
         assertEquals(ubc.getBuildings().size(), 2);
-        assertFalse(ubc.checkForAmenityAtUBC(testAmenityName));
+        assertFalse(ubc.checkForAmenityInClass(testAmenityName));
     }
 
     // amenity does exist
@@ -104,7 +104,7 @@ public class UbcTest {
     public void testCheckForAmenityAtUbcDoesExist() {
         String testAmenityName = "lounge";
         assertEquals(ubc.getBuildings().size(), 2);
-        assertTrue(ubc.checkForAmenityAtUBC(testAmenityName));
+        assertTrue(ubc.checkForAmenityInClass(testAmenityName));
     }
 
     //checkForAmenityInListOfBuildings(String amenity)
@@ -136,7 +136,7 @@ public class UbcTest {
     public void testReturnBuildingsWithAmenityNotFound() {
         String testAmenityName = "test amenity";
         assertEquals(ubc.getBuildings().size(), 2);
-        assertFalse(ubc.checkForAmenityAtUBC(testAmenityName));
+        assertFalse(ubc.checkForAmenityInClass(testAmenityName));
         assertEquals(ubc.returnBuildingsWithAmenity(testAmenityName).size(), 0);
     }
 
@@ -145,7 +145,7 @@ public class UbcTest {
     public void testReturnBuildingsWithAmenityFound() {
         String testAmenityName = "lounge";
         assertEquals(ubc.getBuildings().size(), 2);
-        assertTrue(ubc.checkForAmenityAtUBC(testAmenityName));
+        assertTrue(ubc.checkForAmenityInClass(testAmenityName));
         assertEquals(ubc.returnBuildingsWithAmenity(testAmenityName).size(), 2);
     }
 

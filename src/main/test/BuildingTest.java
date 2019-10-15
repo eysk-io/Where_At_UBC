@@ -79,7 +79,7 @@ public class BuildingTest {
     public void testCheckForAmenityInBuildingDoesNotExist() {
         assertEquals(fakeBuilding.getLocations().size(), 3);
         String testAmenityName = "test amenity";
-        assertFalse(fakeBuilding.checkForAmenityInBuilding(testAmenityName));
+        assertFalse(fakeBuilding.checkForAmenityInClass(testAmenityName));
     }
 
     // amenity does exist inside building
@@ -87,7 +87,7 @@ public class BuildingTest {
     public void testCheckForAmenityInBuildingDoesExist() {
         assertEquals(fakeBuilding.getLocations().size(), 3);
         String testAmenityName = "lounge";
-        assertTrue(fakeBuilding.checkForAmenityInBuilding(testAmenityName));
+        assertTrue(fakeBuilding.checkForAmenityInClass(testAmenityName));
     }
 
     // checkForAmenityInListOfLocations(String amenity)

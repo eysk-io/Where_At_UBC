@@ -1,6 +1,8 @@
 package model;
 
-public class Amenity {
+import interfaces.Places;
+
+public class Amenity implements Places {
     private String name;
 
     // EFFECTS: constructs the amenity, setting its name as an empty string
@@ -20,7 +22,8 @@ public class Amenity {
     }
 
     // EFFECTS: return true if the given amenity name equals the amenity's name
-    public boolean checkForAmenityInAmenity(String amenity) {
+    @Override
+    public boolean checkForAmenityInClass(String amenity) {
         boolean result = false;
         if (this.getAmenityName().equals(amenity)) {
             result = true;

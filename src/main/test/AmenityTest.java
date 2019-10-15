@@ -20,7 +20,7 @@ public class AmenityTest {
         String testAmenityName = "bathroom";
         assertTrue(testAmenity.setAmenityName(testAmenityName));
         assertEquals(testAmenity.getAmenityName(), testAmenityName);
-        assertTrue(testAmenity.checkForAmenityInAmenity(testAmenityName));
+        assertTrue(testAmenity.checkForAmenityInClass(testAmenityName));
     }
 
     @Test
@@ -28,6 +28,6 @@ public class AmenityTest {
         String testAmenityName = "bathroom";
         assertTrue(testAmenity.setAmenityName("lounge"));
         assertEquals(testAmenity.getAmenityName(), "lounge");
-        assertFalse(testAmenity.checkForAmenityInAmenity(testAmenityName));
+        assertFalse(testAmenity.checkForAmenityInClass(testAmenityName));
     }
 }

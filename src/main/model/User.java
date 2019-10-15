@@ -1,6 +1,8 @@
 package model;
 
-public class User {
+import interfaces.People;
+
+public class User implements People {
     private String name;
 
     // EFFECTS: constructs the amenity, setting its name as an empty string
@@ -9,7 +11,8 @@ public class User {
     }
 
     // EFFECTS: return the name of the user
-    public String getUserName() {
+    @Override
+    public String getName() {
         return this.name;
     }
 
