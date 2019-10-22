@@ -1,8 +1,6 @@
 package model;
 
-import interfaces.Places;
-
-public class Amenity implements Places {
+public class Amenity extends Places {
     private String name;
 
     // EFFECTS: constructs the amenity, setting its name as an empty string

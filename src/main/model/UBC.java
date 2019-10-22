@@ -1,10 +1,8 @@
 package model;
 
-import interfaces.Places;
-
 import java.util.ArrayList;
 
-public class UBC implements Places {
+public class UBC extends Places {
     private ArrayList<Building> buildings;
 
     // EFFECTS: constructs UBC, setting an empty list of buildings on campus
