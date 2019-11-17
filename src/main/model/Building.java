@@ -1,6 +1,9 @@
 package model;
 
+import exceptions.NoAmenityException;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Building extends Places {
     private String name;
@@ -37,14 +40,22 @@ public class Building extends Places {
 
     // EFFECTS: return the list of locations for which the amenity exists within the building
     public ArrayList<Location> returnLocationsFromBuilding(String amenity) {
-        ArrayList<Location> result = returnLocationsFromListOfLocations(amenity);
-        return result;
+        try {
+            ArrayList<Location> result = returnLocationsFromListOfLocations(amenity);
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<Location>();
+        } finally {
+            System.out.println("No result found!");;
+        }
     }
 
     // EFFECTS: return the list of locations for which the amenity exists within the list of locations
-    public ArrayList<Location> returnLocationsFromListOfLocations(String amenity) {
+    public ArrayList<Location> returnLocationsFromListOfLocations(String amenity) throws NoAmenityException {
         ArrayList<Location> result = new ArrayList<Location>();
-        if (this.checkForAmenityInListOfLocations(amenity)) {
+        if (!this.checkForAmenityInListOfLocations(amenity)) {
+            throw new NoAmenityException();
+        } else if (this.checkForAmenityInListOfLocations(amenity)) {
             for (int i = 0; i < locations.size(); i++) {
                 result.add(locations.get(i));
             }
@@ -62,7 +73,7 @@ public class Building extends Places {
         }
         return result;
     }
-    
+
 
     // EFFECTS: return true if the amenity is found inside the list of locations inside the building
     public Boolean checkForAmenityInListOfLocations(String amenity) {
