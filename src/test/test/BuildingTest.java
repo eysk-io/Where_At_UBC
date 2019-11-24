@@ -140,18 +140,33 @@ public class BuildingTest {
     @Test
     public void testReturnLocationsFromListOfLocationsEmpty() {
         assertEquals(testBuilding.getLocations().size(), 0);
-        assertEquals(testBuilding.returnLocationsFromListOfLocations("lounge").size(), 0);
+        try {
+            testBuilding.returnLocationsFromListOfLocations("lounge");
+            fail();
+        } catch (Exception e) {
+            System.out.println("Test passed!");
+        }
     }
 
     @Test
     public void testReturnLocationsFromListOfLocationsNonEmptyListOfLocationsAmenityNotFound() {
         assertEquals(fakeBuilding.getLocations().size(), 3);
-        assertEquals(fakeBuilding.returnLocationsFromListOfLocations("test").size(), 0);
+        try {
+            fakeBuilding.returnLocationsFromListOfLocations("test");
+            fail();
+        } catch (Exception e) {
+            System.out.println("Test passed!");
+        }
     }
 
     @Test
     public void testReturnLocationsFromListOfLocationsNonEmptyListOfLocationsAmenityFound() {
         assertEquals(fakeBuilding.getLocations().size(), 3);
-        assertEquals(fakeBuilding.returnLocationsFromListOfLocations("lounge").size(), 3);
+        try {
+            fakeBuilding.returnLocationsFromListOfLocations("lounge");
+            System.out.println("Test passed!");
+        } catch (Exception e) {
+            fail();
+        }
     }
 }
