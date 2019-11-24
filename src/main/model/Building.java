@@ -62,7 +62,7 @@ public class Building extends Places {
         }
         return result;
     }
-    
+
 
     // EFFECTS: return true if the amenity is found inside the list of locations inside the building
     public Boolean checkForAmenityInListOfLocations(String amenity) {

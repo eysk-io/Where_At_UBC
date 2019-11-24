@@ -2,47 +2,49 @@ package ui;
 
 import model.*;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Search {
     private static Amenity amenity = new Amenity();
+    private static ArrayList<Location> listOfFakeLocations = setFakeLocations();
+    private static User user;
+    private static UBC ubc;
 
-    public static void main(String[] args) throws IOException {
-        User user = createUser();
-        List<String> lines = Files.readAllLines(Paths.get("./data/userInfo.txt"));
-        PrintWriter writer = new PrintWriter("./data/userInfo.txt","UTF-8");
-
-        // START OF fakeBuilding/Location/Amenity
-        ArrayList<Location> listOfFakeLocations = setFakeLocations();
-        String fakeName = "fake b1";
-        Building fakeBuilding1 = createBuilding(listOfFakeLocations, fakeName);
-        fakeName = "fake b2";
-        Building fakeBuilding2 = createBuilding(listOfFakeLocations, fakeName);
-
-        UBC ubc = new UBC();
-        ubc.addBuilding(fakeBuilding1);
-        ubc.addBuilding(fakeBuilding2);
-
-        ArrayList<Building> validBuildings = createValidBuildings(user.getName(), ubc, amenity);
-        Building building = createBuildingSearch(validBuildings, ubc);
-        lines.add(building.getBuildingName());
-
-        finishAmenitySearch(building, amenity);
-        outPutToFile(lines, writer);
+    //EFFECTS: create the required fake location data
+    private static ArrayList<Location> setFakeLocations() {
+        ArrayList<Location> result = new ArrayList<Location>();
+        ArrayList<Amenity> amenities = setFakeAmenities();
+        Location fakeLocation1 = new Location();
+        Location fakeLocation2 = new Location();
+        Location fakeLocation3 = new Location();
+        fakeLocation1.setLocationName("fake l1");
+        fakeLocation2.setLocationName("fake l2");
+        fakeLocation3.setLocationName("fake l3");
+        for (int i = 0; i < amenities.size(); i++) {
+            fakeLocation1.addAmenity(amenities.get(i));
+            fakeLocation2.addAmenity(amenities.get(i));
+            fakeLocation3.addAmenity(amenities.get(i));
+        }
+        result.add(fakeLocation1);
+        result.add(fakeLocation2);
+        result.add(fakeLocation3);
+        return result;
     }
 
-    private static void outPutToFile(List<String> lines, PrintWriter writer) {
-        lines.add(amenity.getAmenityName());
-        for (String line : lines) {
-            writer.println(line);
-        }
-        writer.close();
+    // EFFECTS: create the required fake amenity data
+    private static ArrayList<Amenity> setFakeAmenities() {
+        ArrayList<Amenity> result = new ArrayList<Amenity>();
+        Amenity fakeAmenity1 = new Amenity();
+        Amenity fakeAmenity2 = new Amenity();
+        Amenity fakeAmenity3 = new Amenity();
+        fakeAmenity1.setAmenityName("bathroom");
+        fakeAmenity2.setAmenityName("water fountain");
+        fakeAmenity3.setAmenityName("lounge");
+        result.add(fakeAmenity1);
+        result.add(fakeAmenity2);
+        result.add(fakeAmenity3);
+        return result;
     }
 
     // EFFECTS: Create a fake building for Search class
@@ -55,16 +57,36 @@ public class Search {
         return fakeBuilding;
     }
 
-    private static User createUser() {
-        System.out.println("Welcome to Where@UBC! Please input your name below to begin:");
-        User user = new User();
-        Scanner userScanner = new Scanner(System.in);
-        String userName = userScanner.nextLine();
-        user.setUserName(userName);
-        return user;
+    // EFFECTS: Create the fake UBC data
+    private static UBC createUBC() {
+        ArrayList<Amenity> listOfAmenities = setFakeAmenities();
+        ArrayList<Location> listOfLocations = setFakeLocations();
+        Building fakeBuilding1 = createBuilding(listOfLocations, "fake b1");
+        Building fakeBuilding2 = createBuilding(listOfLocations, "fake b2");
+        UBC ubc = new UBC();
+        ubc.addBuilding(fakeBuilding1);
+        ubc.addBuilding(fakeBuilding2);
+        return ubc;
     }
 
-    private static ArrayList<Building> createValidBuildings(String userName, UBC ubc, Amenity amenity) {
+    public static void main(String[] args) {
+        // Create all the fake data required
+        ubc = createUBC();
+
+        // Receive user name input
+//        userNameInput();
+
+        ArrayList<Building> validBuildings = validBuildingsOutput(user.getName(), ubc, amenity);
+
+        // Check if building searched for is a building with the amenity
+        Building searchedBuilding = searchBuilding(validBuildings, ubc);
+
+        // Output the final result of the search
+        outputAmenitySearchResult(searchedBuilding, amenity);
+    }
+
+    // EFFECTS: output the valid buildings that have the required amenities
+    private static ArrayList<Building> validBuildingsOutput(String userName, UBC ubc, Amenity amenity) {
         System.out.println("Thanks " + userName + "! What can I find for you today?");
         Scanner amenityScanner = new Scanner(System.in);
         String amenityName = amenityScanner.nextLine();
@@ -75,7 +97,9 @@ public class Search {
         return validBuildings;
     }
 
-    private static Building createBuildingSearch(ArrayList<Building> validBuildings, UBC ubc) {
+    // EFFECTS: Set the building to search
+    private static Building searchBuilding(ArrayList<Building> validBuildings, UBC ubc) {
+
         // Search based on chosen building
         System.out.println("Which building would you like to search?");
         Building building = new Building();
@@ -95,7 +119,7 @@ public class Search {
         return building;
     }
 
-    private static void finishAmenitySearch(Building building, Amenity amenity) {
+    private static void outputAmenitySearchResult(Building building, Amenity amenity) {
         // if valid building given:
         if (building.checkForAmenityInClass(amenity.getAmenityName())) {
             System.out.println("You can find the " + amenity.getAmenityName()
@@ -133,40 +157,6 @@ public class Search {
                 result = true;
             }
         }
-        return result;
-    }
-
-    public static ArrayList<Amenity> setFakeAmenities() {
-        ArrayList<Amenity> result = new ArrayList<Amenity>();
-        Amenity fakeAmenity1 = new Amenity();
-        Amenity fakeAmenity2 = new Amenity();
-        Amenity fakeAmenity3 = new Amenity();
-        fakeAmenity1.setAmenityName("bathroom");
-        fakeAmenity2.setAmenityName("water fountain");
-        fakeAmenity3.setAmenityName("lounge");
-        result.add(fakeAmenity1);
-        result.add(fakeAmenity2);
-        result.add(fakeAmenity3);
-        return result;
-    }
-
-    public static ArrayList<Location> setFakeLocations() {
-        ArrayList<Location> result = new ArrayList<Location>();
-        ArrayList<Amenity> amenities = setFakeAmenities();
-        Location fakeLocation1 = new Location();
-        Location fakeLocation2 = new Location();
-        Location fakeLocation3 = new Location();
-        fakeLocation1.setLocationName("fake l1");
-        fakeLocation2.setLocationName("fake l2");
-        fakeLocation3.setLocationName("fake l3");
-        for (int i = 0; i < amenities.size(); i++) {
-            fakeLocation1.addAmenity(amenities.get(i));
-            fakeLocation2.addAmenity(amenities.get(i));
-            fakeLocation3.addAmenity(amenities.get(i));
-        }
-        result.add(fakeLocation1);
-        result.add(fakeLocation2);
-        result.add(fakeLocation3);
         return result;
     }
 }
