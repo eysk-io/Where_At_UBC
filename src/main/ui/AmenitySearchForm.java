@@ -18,7 +18,6 @@ public class AmenitySearchForm {
     private static Amenity amenity = new Amenity();
     private static UBC ubc;
 
-
     public AmenitySearchForm(JFrame amenityFrame) {
         setup(amenityFrame);
         submitButton.addActionListener(new ActionListener() {
@@ -41,6 +40,7 @@ public class AmenitySearchForm {
         });
     }
 
+    // EFFECTS: sets up the JFrame for the form
     private void setup(JFrame amenityFrame) {
         amenityFrame.setContentPane(panelMain);
         amenityFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +48,7 @@ public class AmenitySearchForm {
         amenityFrame.setVisible(true);
     }
 
-    //EFFECTS: create the required fake location data
+    // EFFECTS: create required fake location data
     private static ArrayList<Location> setFakeLocations() {
         ArrayList<Location> result = new ArrayList<Location>();
         ArrayList<Amenity> amenities = setFakeAmenities();
@@ -69,7 +69,7 @@ public class AmenitySearchForm {
         return result;
     }
 
-    // EFFECTS: create the required fake amenity data
+    // EFFECTS: create required fake amenity data and return list of amenity
     private static ArrayList<Amenity> setFakeAmenities() {
         ArrayList<Amenity> result = new ArrayList<Amenity>();
         Amenity fakeAmenity1 = new Amenity();
@@ -84,7 +84,7 @@ public class AmenitySearchForm {
         return result;
     }
 
-    // EFFECTS: Create a fake building for Search class
+    // EFFECTS: create and return building for Search class
     private static Building createBuilding(ArrayList<Location> listOfFakeLocations, String fakeName) {
         Building fakeBuilding = new Building();
         fakeBuilding.setBuildingName(fakeName);
@@ -94,7 +94,7 @@ public class AmenitySearchForm {
         return fakeBuilding;
     }
 
-    // EFFECTS: Create the fake UBC data
+    // EFFECTS: create and return UBC data
     private static UBC createUBC() {
         ArrayList<Location> listOfLocations = setFakeLocations();
         Building fakeBuilding1 = createBuilding(listOfLocations, "fake b1");
@@ -105,12 +105,13 @@ public class AmenitySearchForm {
         return ubc;
     }
 
-    // EFFECTS: output the valid buildings that have the required amenities
+    // EFFECTS: output the valid buildings that have the required amenity
     private static ArrayList<Building> validBuildingsOutput(UBC ubc, Amenity amenity) {
         ArrayList<Building> validBuildings = tryAgainUntilAmenityFound(amenity.getAmenityName(), ubc, amenity);
         return validBuildings;
     }
 
+    // EFFECTS: return a list of buildings which holds the searched amenity
     private static ArrayList<Building> tryAgainUntilAmenityFound(String name, UBC ubc, Amenity amenity) {
         ArrayList<Building> validBuildings = new ArrayList<Building>();
         if (!ubc.checkForAmenityInClass(name)) {

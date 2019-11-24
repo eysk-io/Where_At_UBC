@@ -21,6 +21,7 @@ public class LocationOutputForm {
         locationOutput.setText(outputAmenitySearchResult(validBuilding, searchedAmenity));
     }
 
+    // EFFECTS: sets up the JFrame for the form
     private void setup(JFrame locationFrame) {
         locationFrame.setContentPane(panelMain);
         locationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +29,7 @@ public class LocationOutputForm {
         locationFrame.setVisible(true);
     }
 
+    // EFFECTS: return the final search result of locations with the searched amenity
     private static String outputAmenitySearchResult(Building building, Amenity amenity) {
         String result = "| ";
         ArrayList<Location> resultList = building.returnLocationsFromBuilding(amenity.getAmenityName());

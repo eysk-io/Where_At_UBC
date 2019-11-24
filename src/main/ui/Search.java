@@ -7,11 +7,10 @@ import java.util.Scanner;
 
 public class Search {
     private static Amenity amenity = new Amenity();
-    private static ArrayList<Location> listOfFakeLocations = setFakeLocations();
     private static User user;
     private static UBC ubc;
 
-    //EFFECTS: create the required fake location data
+    // EFFECTS: create required fake location data
     private static ArrayList<Location> setFakeLocations() {
         ArrayList<Location> result = new ArrayList<Location>();
         ArrayList<Amenity> amenities = setFakeAmenities();
@@ -32,7 +31,7 @@ public class Search {
         return result;
     }
 
-    // EFFECTS: create the required fake amenity data
+    // EFFECTS: create required fake amenity data and return list of amenity
     private static ArrayList<Amenity> setFakeAmenities() {
         ArrayList<Amenity> result = new ArrayList<Amenity>();
         Amenity fakeAmenity1 = new Amenity();
@@ -47,7 +46,7 @@ public class Search {
         return result;
     }
 
-    // EFFECTS: Create a fake building for Search class
+    // EFFECTS: create and return building for Search class
     private static Building createBuilding(ArrayList<Location> listOfFakeLocations, String fakeName) {
         Building fakeBuilding = new Building();
         fakeBuilding.setBuildingName(fakeName);
@@ -57,7 +56,7 @@ public class Search {
         return fakeBuilding;
     }
 
-    // EFFECTS: Create the fake UBC data
+    // EFFECTS: create and return UBC data
     private static UBC createUBC() {
         ArrayList<Amenity> listOfAmenities = setFakeAmenities();
         ArrayList<Location> listOfLocations = setFakeLocations();
@@ -74,8 +73,9 @@ public class Search {
         ubc = createUBC();
 
         // Receive user name input
-//        userNameInput();
+        user = userNameInput();
 
+        // Receive amenity request from user
         ArrayList<Building> validBuildings = validBuildingsOutput(user.getName(), ubc, amenity);
 
         // Check if building searched for is a building with the amenity
@@ -85,28 +85,36 @@ public class Search {
         outputAmenitySearchResult(searchedBuilding, amenity);
     }
 
-    // EFFECTS: output the valid buildings that have the required amenities
+    // EFFECTS: helper for receiving user name input
+    private static User userNameInput() {
+        System.out.println("Welcome to Where@UBC! Please input your name below to begin:");
+        User user = new User();
+        Scanner userScanner = new Scanner(System.in);
+        String userName = userScanner.nextLine();
+        user.setUserName(userName);
+        return user;
+    }
+
+    // MODIFIES: Amenity, this
+    // EFFECTS: output the valid buildings that have the required amenity
     private static ArrayList<Building> validBuildingsOutput(String userName, UBC ubc, Amenity amenity) {
         System.out.println("Thanks " + userName + "! What can I find for you today?");
         Scanner amenityScanner = new Scanner(System.in);
         String amenityName = amenityScanner.nextLine();
         amenity.setAmenityName(amenityName);
         // check if amenity exists at UBC. If NOT, try again until amenity found
-
         ArrayList<Building> validBuildings = tryAgainUntilAmenityFound(amenityName, ubc, amenity, amenityScanner);
         return validBuildings;
     }
 
-    // EFFECTS: Set the building to search
+    // EFFECTS: return the building to search on
     private static Building searchBuilding(ArrayList<Building> validBuildings, UBC ubc) {
-
         // Search based on chosen building
         System.out.println("Which building would you like to search?");
         Building building = new Building();
         Scanner buildingScanner = new Scanner(System.in);
         String buildingName = buildingScanner.nextLine();
         building.setBuildingName(buildingName);
-
         // if invalid building given:
         while (!checkForBuildingInListOfBuildings(validBuildings, buildingName)) {
             System.out.println("I'm sorry, that is not valid. Please try another building search based on below:");
@@ -119,6 +127,7 @@ public class Search {
         return building;
     }
 
+    // EFFECTS: return the final search result of amenity from the search
     private static void outputAmenitySearchResult(Building building, Amenity amenity) {
         // if valid building given:
         if (building.checkForAmenityInClass(amenity.getAmenityName())) {
@@ -131,6 +140,7 @@ public class Search {
         }
     }
 
+    // EFFECTS: return a list of buildings which holds the searched amenity
     private static ArrayList<Building> tryAgainUntilAmenityFound(String name, UBC ubc, Amenity amenity, Scanner as) {
         ArrayList<Building> validBuildings = new ArrayList<Building>();
         while (!ubc.checkForAmenityInClass(name)) {
@@ -138,11 +148,9 @@ public class Search {
             name = as.nextLine();
             amenity.setAmenityName(name);
         }
-
-        // if amenity exists, return list of buildings at UBC with the amenities
+        // if amenity exists, return list of buildings at UBC with the amenity
         System.out.println("You can find the " + name + " in the following buildings:");
         validBuildings = ubc.returnBuildingsWithAmenity(name);
-
         for (int i = 0; i < validBuildings.size(); i++) {
             System.out.println(validBuildings.get(i).getBuildingName());
         }

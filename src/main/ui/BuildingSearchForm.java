@@ -34,6 +34,7 @@ public class BuildingSearchForm {
         });
     }
 
+    // EFFECTS: sets up the JFrame for the form
     private void setup(JFrame buildingSearchFrame) {
         buildingSearchFrame.setContentPane(panelMain);
         buildingSearchFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +42,7 @@ public class BuildingSearchForm {
         buildingSearchFrame.setVisible(true);
     }
 
+    // EFFECTS: return a string of the buildings that have the searched amenity
     private static String validBuildingNames(ArrayList<Building> validBuildings) {
         String buildings = "| ";
         for (Building building: validBuildings) {
@@ -49,7 +51,7 @@ public class BuildingSearchForm {
         return buildings;
     }
 
-    //EFFECTS: Set the building to search
+    // EFFECTS: return the building to search on
     private static Building searchBuilding(ArrayList<Building> validBuildings, String buildingName, UBC ubc) {
         // Search based on chosen building
         Building building = new Building();

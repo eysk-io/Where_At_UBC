@@ -3,7 +3,6 @@ package model;
 import exceptions.NoAmenityException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Building extends Places {
     private String name;
@@ -63,7 +62,6 @@ public class Building extends Places {
         return result;
     }
 
-
     // EFFECTS: return true if the amenity is found inside the building
     @Override
     public boolean checkForAmenityInClass(String amenity) {
@@ -73,7 +71,6 @@ public class Building extends Places {
         }
         return result;
     }
-
 
     // EFFECTS: return true if the amenity is found inside the list of locations inside the building
     public Boolean checkForAmenityInListOfLocations(String amenity) {
