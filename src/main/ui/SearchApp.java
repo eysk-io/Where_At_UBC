@@ -8,6 +8,7 @@ public class SearchApp {
     private JPanel panelMain;
     private JButton submitButton;
     public JTextField userNameTextBox;
+    private JLabel logo;
 
     public SearchApp(JFrame userFrame) {
         submitButton.addActionListener(new ActionListener() {
@@ -34,5 +35,9 @@ public class SearchApp {
 
     private JPanel getPanel() {
         return panelMain;
+    }
+
+    private void createUIComponents() {
+        logo = new JLabel(new ImageIcon("data/logo.png"));
     }
 }

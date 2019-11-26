@@ -11,13 +11,13 @@ public class LocationOutputForm {
     private JPanel panelMain;
     private JLabel amenityOutput;
     private JLabel locationOutput;
+    private JLabel logo;
 
     public LocationOutputForm(JFrame locationFrame, Building validBuilding) {
         setup(locationFrame);
         Amenity searchedAmenity = AmenitySearchForm.getAmenity();
         amenityOutput.setText("You can find the " + searchedAmenity.getAmenityName()
                 + " at the following locations within " + validBuilding.getBuildingName() + ":");
-        //        locationOutput.setText(outputAmenitySearchResult(building, AmenitySearchForm.getAmenity()));
         locationOutput.setText(outputAmenitySearchResult(validBuilding, searchedAmenity));
     }
 
@@ -37,5 +37,9 @@ public class LocationOutputForm {
             result += location.getLocationName() + " | ";
         }
         return result;
+    }
+
+    private void createUIComponents() {
+        logo = new JLabel(new ImageIcon("data/logo.png"));
     }
 }

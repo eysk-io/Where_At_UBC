@@ -13,6 +13,7 @@ public class BuildingSearchForm {
     private JButton submitButton;
     private JTextField buildingTextBox;
     private JLabel output;
+    private JLabel logo;
 
     public BuildingSearchForm(JFrame buildingFrame, ArrayList<Building> validBuildings, UBC ubc) {
         setup(buildingFrame);
@@ -77,5 +78,9 @@ public class BuildingSearchForm {
             }
         }
         return result;
+    }
+
+    private void createUIComponents() {
+        logo = new JLabel(new ImageIcon("data/logo.png"));
     }
 }

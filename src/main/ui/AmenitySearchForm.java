@@ -14,6 +14,7 @@ public class AmenitySearchForm {
     private JPanel panelMain;
     private JButton submitButton;
     private JTextField amenityTextBox;
+    private JLabel logo;
 
     private static Amenity amenity = new Amenity();
     private static UBC ubc;
@@ -55,9 +56,9 @@ public class AmenitySearchForm {
         Location fakeLocation1 = new Location();
         Location fakeLocation2 = new Location();
         Location fakeLocation3 = new Location();
-        fakeLocation1.setLocationName("fake l1");
-        fakeLocation2.setLocationName("fake l2");
-        fakeLocation3.setLocationName("fake l3");
+        fakeLocation1.setLocationName("first floor");
+        fakeLocation2.setLocationName("second floor");
+        fakeLocation3.setLocationName("third floor");
         for (int i = 0; i < amenities.size(); i++) {
             fakeLocation1.addAmenity(amenities.get(i));
             fakeLocation2.addAmenity(amenities.get(i));
@@ -97,8 +98,8 @@ public class AmenitySearchForm {
     // EFFECTS: create and return UBC data
     private static UBC createUBC() {
         ArrayList<Location> listOfLocations = setFakeLocations();
-        Building fakeBuilding1 = createBuilding(listOfLocations, "fake b1");
-        Building fakeBuilding2 = createBuilding(listOfLocations, "fake b2");
+        Building fakeBuilding1 = createBuilding(listOfLocations, "ICICS");
+        Building fakeBuilding2 = createBuilding(listOfLocations, "AMS Nest");
         UBC ubc = new UBC();
         ubc.addBuilding(fakeBuilding1);
         ubc.addBuilding(fakeBuilding2);
@@ -125,5 +126,9 @@ public class AmenitySearchForm {
 
     public static Amenity getAmenity() {
         return amenity;
+    }
+
+    private void createUIComponents() {
+        logo = new JLabel(new ImageIcon("data/logo.png"));
     }
 }
