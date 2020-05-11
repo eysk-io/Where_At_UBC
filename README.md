@@ -1,7 +1,5 @@
 # WhereAtUBC
-app to find amenities on campus at UBC
-
-(in progress)
+Application built in Java to find amenities in buildings on UBC campus
 
 Contains six classes for each model (UBC, Building, Location, Places, Amenity, User)
 
